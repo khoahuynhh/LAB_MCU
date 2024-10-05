@@ -77,24 +77,7 @@ void set_state(GPIO_PinState EN0_state, GPIO_PinState EN1_state,
 	HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, EN3_state);
 }
 void display7SEG(int number) {
-	switch (number) {
-	case 0:
-		set_LEDS(LEDS_state[0]);
-		break;
-	case 1:
-		set_LEDS(LEDS_state[1]);
-		break;
-	case 2:
-		set_LEDS(LEDS_state[2]);
-		break;
-	case 3:
-		set_LEDS(LEDS_state[3]);
-		break;
-	case 4:
-		set_LEDS(LEDS_state[4]);
-	default:
-		break;
-	}
+	set_LEDS(LEDS_state[number]);
 }
 const int MAX_LED = 4;
 int index_led = 0;
