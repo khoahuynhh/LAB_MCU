@@ -61,9 +61,10 @@ SEG_2_GPIO_Port, SEG_3_GPIO_Port, SEG_4_GPIO_Port, SEG_5_GPIO_Port,
 SEG_6_GPIO_Port };
 uint16_t SEG_PINS[7] = { SEG_0_Pin, SEG_1_Pin, SEG_2_Pin, SEG_3_Pin, SEG_4_Pin,
 SEG_5_Pin, SEG_6_Pin };
-GPIO_PinState LEDS_state[5][7] = { { 0, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 1, 1, 1,
+GPIO_PinState LEDS_state[10][7] = { { 0, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 1, 1, 1,
 		1 }, { 0, 0, 1, 0, 0, 1, 0 }, { 0, 0, 0, 0, 1, 1, 0 }, { 1, 0, 0, 1, 1,
-		0, 0 } };
+		0, 0 }, { 0, 1, 0, 0, 1, 0, 0 }, { 0, 1, 0, 0, 0, 0, 0 }, { 0, 0, 0, 1,
+		1, 1, 1 }, { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 1, 0, 0 } };
 void set_LEDS(GPIO_PinState *L_LEDS_state) {
 	for (int i = 0; i < 7; i++) {
 		HAL_GPIO_WritePin(SEG_PORTS[i], SEG_PINS[i], L_LEDS_state[i]);
@@ -77,24 +78,7 @@ void set_state(GPIO_PinState EN0_state, GPIO_PinState EN1_state,
 	HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, EN3_state);
 }
 void display7SEG(int number) {
-	switch (number) {
-	case 0:
-		set_LEDS(LEDS_state[0]);
-		break;
-	case 1:
-		set_LEDS(LEDS_state[1]);
-		break;
-	case 2:
-		set_LEDS(LEDS_state[2]);
-		break;
-	case 3:
-		set_LEDS(LEDS_state[3]);
-		break;
-	case 4:
-		set_LEDS(LEDS_state[4]);
-	default:
-		break;
-	}
+	set_LEDS(LEDS_state[number]);
 }
 const int MAX_LED = 4;
 int index_led = 0;
@@ -157,11 +141,25 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+	int hour = 15, minute = 8, second = 50;
 	while (1) {
-
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+		second++;
+		if (second >= 60) {
+			second = 0;
+			minute++;
+		}
+		if (minute >= 60) {
+			minute = 0;
+			hour++;
+		}
+		if (hour >= 24) {
+			hour = 0;
+		}
+		updateClockBuffer();
+		HAL_Delay(1000);
 	}
 	/* USER CODE END 3 */
 }
@@ -283,18 +281,9 @@ static void MX_GPIO_Init(void) {
 }
 
 /* USER CODE BEGIN 4 */
-int counter = 0;
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	timerRun();
-	counter++;
-	if (index_led >= MAX_LED) {
-		index_led = 0;
-	}
-	if (counter >= 100) {
-		update7SEG(index_led++);
-		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-		counter = 0;
-	}
 }
 /* USER CODE END 4 */
 
