@@ -57,10 +57,10 @@ static void MX_TIM2_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 GPIO_TypeDef *SEG_PORTS[7] = { SEG_0_GPIO_Port, SEG_1_GPIO_Port,
-		SEG_2_GPIO_Port, SEG_3_GPIO_Port, SEG_4_GPIO_Port, SEG_5_GPIO_Port,
-		SEG_6_GPIO_Port };
+SEG_2_GPIO_Port, SEG_3_GPIO_Port, SEG_4_GPIO_Port, SEG_5_GPIO_Port,
+SEG_6_GPIO_Port };
 uint16_t SEG_PINS[7] = { SEG_0_Pin, SEG_1_Pin, SEG_2_Pin, SEG_3_Pin, SEG_4_Pin,
-		SEG_5_Pin, SEG_6_Pin };
+SEG_5_Pin, SEG_6_Pin };
 GPIO_PinState LEDS_state[10][7] = { { 0, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 1, 1, 1,
 		1 }, { 0, 0, 1, 0, 0, 1, 0 }, { 0, 0, 0, 0, 1, 1, 0 } };
 void set_LEDS(GPIO_PinState *L_LEDS_state) {
@@ -76,22 +76,7 @@ void set_state(GPIO_PinState EN0_state, GPIO_PinState EN1_state,
 	HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, EN3_state);
 }
 void display7SEG(int number) {
-	switch (number) {
-	case 0:
-		set_LEDS(LEDS_state[0]);
-		break;
-	case 1:
-		set_LEDS(LEDS_state[1]);
-		break;
-	case 2:
-		set_LEDS(LEDS_state[2]);
-		break;
-	case 3:
-		set_LEDS(LEDS_state[3]);
-		break;
-	default:
-		break;
-	}
+	set_LEDS(LEDS_state[number]);
 }
 /* USER CODE END 0 */
 
