@@ -148,7 +148,8 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	setTimer(0, 1000);
+	setTimer(0, 250);
+	int counter = 0;
 	while (1) {
 		/* USER CODE END WHILE */
 
@@ -171,8 +172,12 @@ int main(void) {
 				index_led = 0;
 			}
 			update7SEG(index_led++);
-			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-			setTimer(0, 1000);
+			counter++;
+			if (counter == 4) {
+				HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+				counter = 0;
+			}
+			setTimer(0, 250);
 		}
 	}
 	/* USER CODE END 3 */
