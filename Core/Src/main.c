@@ -170,12 +170,12 @@ int main(void) {
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	setTimer(0, 100);
+	update_matrix_buffer();
 	while (1) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
 		if (timer_flag[0] == 1) {
-			update_matrix_buffer();
 			if (index_led_matrix >= MAX_LED_MATRIX) {
 				index_led_matrix = 0;
 			}

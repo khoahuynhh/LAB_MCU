@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  0001636c  00000000  00000000  0002af20  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000a0e8  00000000  00000000  0004128c  2**0
+ 17 .debug_line   0000a0e4  00000000  00000000  0004128c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000822e4  00000000  00000000  0004b374  2**0
+ 18 .debug_str    000822e4  00000000  00000000  0004b370  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000cd658  2**0
+ 19 .comment      00000053  00000000  00000000  000cd654  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000026a0  00000000  00000000  000cd6ac  2**2
+ 20 .debug_frame  000026a0  00000000  00000000  000cd6a8  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -483,17 +483,17 @@ int main(void) {
  80003de:	2164      	movs	r1, #100	; 0x64
  80003e0:	2000      	movs	r0, #0
  80003e2:	f7ff feb3 	bl	800014c <setTimer>
+	update_matrix_buffer();
+ 80003e6:	f7ff feff 	bl	80001e8 <update_matrix_buffer>
 	while (1) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
 		if (timer_flag[0] == 1) {
- 80003e6:	4b0e      	ldr	r3, [pc, #56]	; (8000420 <main+0x5c>)
- 80003e8:	681b      	ldr	r3, [r3, #0]
- 80003ea:	2b01      	cmp	r3, #1
- 80003ec:	d1fb      	bne.n	80003e6 <main+0x22>
-			update_matrix_buffer();
- 80003ee:	f7ff fefb 	bl	80001e8 <update_matrix_buffer>
+ 80003ea:	4b0d      	ldr	r3, [pc, #52]	; (8000420 <main+0x5c>)
+ 80003ec:	681b      	ldr	r3, [r3, #0]
+ 80003ee:	2b01      	cmp	r3, #1
+ 80003f0:	d1fb      	bne.n	80003ea <main+0x26>
 			if (index_led_matrix >= MAX_LED_MATRIX) {
  80003f2:	4b0c      	ldr	r3, [pc, #48]	; (8000424 <main+0x60>)
  80003f4:	681b      	ldr	r3, [r3, #0]
@@ -518,7 +518,7 @@ int main(void) {
  8000414:	2000      	movs	r0, #0
  8000416:	f7ff fe99 	bl	800014c <setTimer>
 		if (timer_flag[0] == 1) {
- 800041a:	e7e4      	b.n	80003e6 <main+0x22>
+ 800041a:	e7e6      	b.n	80003ea <main+0x26>
  800041c:	200000e8 	.word	0x200000e8
  8000420:	200000c0 	.word	0x200000c0
  8000424:	20000094 	.word	0x20000094
