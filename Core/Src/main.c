@@ -68,16 +68,23 @@ uint16_t ROW_PINS[8] = { ROW0_Pin, ROW1_Pin, ROW2_Pin, ROW3_Pin, ROW4_Pin,
 ROW5_Pin, ROW6_Pin, ROW7_Pin };
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
+int index_shift = 0;
 uint8_t matrix_buffer[8] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 };
 void update_matrix_buffer() {
 	matrix_buffer[0] = 0x3C;
 	matrix_buffer[1] = 0x66;
-	matrix_buffer[2] = 0xC3;
-	matrix_buffer[3] = 0xFF;
-	matrix_buffer[4] = 0xFF;
-	matrix_buffer[5] = 0xC3;
-	matrix_buffer[6] = 0xC3;
-	matrix_buffer[7] = 0xC3;
+	matrix_buffer[2] = 0x66;
+	matrix_buffer[3] = 0x7E;
+	matrix_buffer[4] = 0x66;
+	matrix_buffer[5] = 0x66;
+	matrix_buffer[6] = 0x66;
+	matrix_buffer[7] = 0x00;
+}
+int shift_counter = 0;
+void shift_matrix_left() {
+	for (int i = 0; i < MAX_LED_MATRIX; i++) {
+		matrix_buffer[i] = (matrix_buffer[i] << 1) | (matrix_buffer[i] >> 7);
+	}
 }
 void set_COL(uint8_t data) {
 	for (int i = 0; i < MAX_LED_MATRIX; i++) {
@@ -168,18 +175,23 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	setTimer(0, 10);
+	setTimer(0, 100);
+	update_matrix_buffer();
 	while (1) {
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
 		if (timer_flag[0] == 1) {
-			update_matrix_buffer();
 			if (index_led_matrix >= MAX_LED_MATRIX) {
 				index_led_matrix = 0;
 			}
 			updateLEDMatrix(index_led_matrix++);
-			setTimer(0, 10);
+			shift_counter++;
+			if (shift_counter >= 10) {
+				shift_matrix_left();
+				shift_counter = 0;
+			}
+			setTimer(0, 100);
 		}
 	}
 	/* USER CODE END 3 */
