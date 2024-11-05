@@ -47,20 +47,22 @@ void subKeyProcess(int index) {
 	button1_flag[index] = 1;
 }
 
-void getKeyInput(int index) {
-	KeyReg2[index] = KeyReg1[index];
-	KeyReg1[index] = KeyReg0[index];
+void getKeyInput() {
+	for (int i = 0; i < 10; i++) {
+		KeyReg2[i] = KeyReg1[i];
+		KeyReg1[i] = KeyReg0[i];
+	}
 	// Add your key
 	KeyReg0[0] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
-	KeyReg0[1] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
-	KeyReg0[2] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
-	KeyReg0[3] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
-	KeyReg0[4] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
-	KeyReg0[5] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
-	KeyReg0[6] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
-	KeyReg0[7] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
-	KeyReg0[8] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
-	KeyReg0[9] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
+	KeyReg0[1] = HAL_GPIO_ReadPin(BUTTON_2_GPIO_Port, BUTTON_2_Pin);
+	KeyReg0[2] = HAL_GPIO_ReadPin(BUTTON_3_GPIO_Port, BUTTON_3_Pin);
+	/*KeyReg0[3] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
+	 KeyReg0[4] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
+	 KeyReg0[5] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
+	 KeyReg0[6] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
+	 KeyReg0[7] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
+	 KeyReg0[8] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);
+	 KeyReg0[9] = HAL_GPIO_ReadPin(BUTTON_1_GPIO_Port, BUTTON_1_Pin);*/
 
 	for (int i = 0; i < 10; i++) {
 		if ((KeyReg1[i] == KeyReg0[i]) && (KeyReg1[i] == KeyReg2[i])) {

@@ -1,0 +1,6 @@
+led7_segment.c:22:6:set_7SEG_X	24	static
+led7_segment.c:30:6:set_7SEG_X_left	24	static
+led7_segment.c:38:6:set_7SEG_Y	24	static
+led7_segment.c:46:6:set_7SEG_Y_left	24	static
+led7_segment.c:54:6:displaySetting	16	static
+led7_segment.c:69:6:displaySettingX	16	static
