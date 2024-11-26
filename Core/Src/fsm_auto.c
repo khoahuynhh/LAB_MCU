@@ -13,13 +13,13 @@ void fsm_auto_run() {
 	switch (status) {
 	case INIT:
 		init();
+		init_time();
 		status = AUTO_RED;
 		setTimer(0, 1000);
+		setTimer(1, 250);
 		break;
 	case AUTO_RED:
 		led_red_and_green();
-		set_7SEG_X(LEDS_7SEG_state[time_green]);
-		set_7SEG_Y(LEDS_7SEG_state[time_red]);
 		if (timer_flag[0] == 1) {
 			time_green--;
 			time_red--;
@@ -28,18 +28,21 @@ void fsm_auto_run() {
 			}
 			setTimer(0, 1000);
 		}
+		if (timer_flag[1] == 1) {
+			displaySettingX(time_green);
+			displaySetting(time_red);
+			setTimer(1, 250);
+		}
 		if (isButton1Pressed(0) == 1) {
 			init();
 			status = MAN_RED;
 			setTimer(0, 100000);
-			setTimer(1, 250);
-			setTimer(2, 250);
+			setTimer(2, 500);
+			setTimer(3, 250);
 		}
 		break;
 	case AUTO_GREEN:
 		led_green_and_red();
-		set_7SEG_X(LEDS_7SEG_state[time_red]);
-		set_7SEG_Y(LEDS_7SEG_state[time_green]);
 		if (timer_flag[0] == 1) {
 			time_green--;
 			time_red--;
@@ -48,18 +51,14 @@ void fsm_auto_run() {
 			}
 			setTimer(0, 1000);
 		}
-		if (isButton1Pressed(0) == 1) {
-			init();
-			status = MAN_RED;
-			setTimer(0, 100000);
+		if (timer_flag[1] == 1) {
+			displaySettingX(time_red);
+			displaySetting(time_green);
 			setTimer(1, 250);
-			setTimer(2, 250);
 		}
 		break;
 	case AUTO_YELLOW_MAIN:
 		led_yellow_and_red();
-		set_7SEG_X(LEDS_7SEG_state[time_red]);
-		set_7SEG_Y(LEDS_7SEG_state[time_yellow]);
 		if (timer_flag[0] == 1) {
 			time_red--;
 			time_yellow--;
@@ -69,18 +68,14 @@ void fsm_auto_run() {
 			}
 			setTimer(0, 1000);
 		}
-		if (isButton1Pressed(0) == 1) {
-			init();
-			status = MAN_RED;
-			setTimer(0, 100000);
+		if (timer_flag[1] == 1) {
+			displaySettingX(time_red);
+			displaySetting(time_yellow);
 			setTimer(1, 250);
-			setTimer(2, 250);
 		}
 		break;
 	case AUTO_YELLOW:
 		led_red_and_yellow();
-		set_7SEG_X(LEDS_7SEG_state[time_yellow]);
-		set_7SEG_Y(LEDS_7SEG_state[time_red]);
 		if (timer_flag[0] == 1) {
 			time_red--;
 			time_yellow--;
@@ -90,12 +85,10 @@ void fsm_auto_run() {
 			}
 			setTimer(0, 1000);
 		}
-		if (isButton1Pressed(0) == 1) {
-			init();
-			status = MAN_RED;
-			setTimer(0, 100000);
+		if (timer_flag[1] == 1) {
+			displaySettingX(time_yellow);
+			displaySetting(time_red);
 			setTimer(1, 250);
-			setTimer(2, 250);
 		}
 		break;
 	default:

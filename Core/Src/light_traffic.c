@@ -30,9 +30,9 @@ void set_LEDS(const GPIO_PinState *state) {
 }
 
 void init_time() {
-	time_red = 5;
-	time_green = 3;
-	time_yellow = 2;
+	time_red = time_red_update;
+	time_green = time_green_update;
+	time_yellow = time_yellow_update;
 }
 
 void init() {

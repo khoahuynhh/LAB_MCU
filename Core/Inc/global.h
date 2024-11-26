@@ -35,8 +35,8 @@ extern int counter2;
 extern int time_red;
 extern int time_green;
 extern int time_yellow;
-extern int time_red_new;
-extern int time_green_new;
-extern int time_yellow_new;
+extern int time_red_update;
+extern int time_green_update;
+extern int time_yellow_update;
 
 #endif /* INC_GLOBAL_H_ */
