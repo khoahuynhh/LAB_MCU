@@ -89,7 +89,6 @@ void SCH_Dispatch_Tasks(void) {
 }
 
 unsigned char SCH_Delete_Task(const unsigned char TASK_INDEX) {
-
 	unsigned char Return_code;
 	if (SCH_tasks_G[TASK_INDEX].pTask == 0) {
 		// No task at this location ...
