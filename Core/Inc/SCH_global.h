@@ -36,6 +36,7 @@ void SCH_Report_Status(void);
 #define SCH_MAX_TASKS	40
 #define NO_TASK_ID	0
 sTask SCH_tasks_G[SCH_MAX_TASKS];
+uint8_t queue[SCH_MAX_TASKS];
 
 //define errors
 #define ERROR_SCH_TOO_MANY_TASKS	1
@@ -44,5 +45,7 @@ sTask SCH_tasks_G[SCH_MAX_TASKS];
 #define RETURN_NORMAL	4
 
 extern unsigned char Error_code_G;
+extern unsigned char head;
+extern unsigned char tail;
 
 #endif /* INC_SCH_GLOBAL_H_ */

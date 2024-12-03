@@ -8,6 +8,8 @@
 #include "SCH_global.h"
 
 unsigned char Error_code_G;
+unsigned char head;
+unsigned char tail;
 
 void SCH_Init(void) {
 	unsigned char i;
@@ -18,6 +20,7 @@ void SCH_Init(void) {
 	// − SCH_Delete_Task() will generate an error code,
 	// (because the task array is empty)
 	Error_code_G = 0;
+	head = tail = 0;
 	//Timer_init();
 	//Watchdog_init();
 }
@@ -32,6 +35,8 @@ void SCH_Update(void) {
 				// The task is due to run
 				// Inc. the ’RunMe’ flag
 				SCH_tasks_G[Index].RunMe += 1;
+				queue[tail] = Index;
+				tail = (tail + 1) % SCH_MAX_TASKS;
 				if (SCH_tasks_G[Index].Period) {
 					// Schedule periodic tasks to run again
 					SCH_tasks_G[Index].Delay = SCH_tasks_G[Index].Period;
@@ -71,8 +76,10 @@ unsigned char SCH_Add_Task(void (*pFunction)(), unsigned int DELAY,
 void SCH_Dispatch_Tasks(void) {
 	unsigned char Index;
 	// Dispatches (runs) the next task (if one is ready)
-	for (Index = 0; Index < SCH_MAX_TASKS; Index++) {
+	while (head != tail) {
 		if (SCH_tasks_G[Index].RunMe > 0) {
+			Index = queue[head];
+			head = (head + 1) % SCH_MAX_TASKS;
 			(*SCH_tasks_G[Index].pTask)(); // Run the task
 			SCH_tasks_G[Index].RunMe -= 1; // Reset / reduce RunMe flag
 			// Periodic tasks will automatically run again
